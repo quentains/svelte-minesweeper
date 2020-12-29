@@ -1,37 +1,38 @@
 <script>
-    export let bomb = false;
+    
+    // Value of the case ([1-6]), -1 if bomb !
     export let value = 0;
+
     let flagged = false;
     let clicked = false;
+    
     let image = 'img/case.png';
 
     function handleClick(event) {
-        if (event.button == 0) {
-            clicked = true;       
-        }
-        if (event.button == 2) {
-            if (!clicked) {
+        // Show the case
+        if (event.button == 0)
+            clicked = true;    
+
+        // Toggle the flag
+        else if (event.button == 2) {
+            if (!clicked)
                 flagged = !flagged; 
-            }       
         }
     }
 
+    // Update the image path based on the current state
     $: {
-        if (flagged) {
+        if (flagged)
             image = 'img/flag.png';
-        }
         else if (clicked) {
-            if (bomb) {
+            // If bomb
+            if (value == -1)
                 image = 'img/bomb.png';
-            }
-            else {
+            else
                 image = "img/" + value + ".png";
-            }
         }
-        else {
+        else
             image = 'img/case.png';
-        }
-
     }
 
 </script>

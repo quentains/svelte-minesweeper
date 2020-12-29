@@ -10,7 +10,7 @@
         <div class="row">
             {#each Array(width) as _, j}
                 <div class="col p-0">
-                    <Case bomb=true/>
+                    <Case/>
                 </div>
             {/each}
         </div>
