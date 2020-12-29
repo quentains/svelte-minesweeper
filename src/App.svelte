@@ -1,8 +1,13 @@
 <script>
-	import Case from "./Game/Case.svelte";
 	import Grid from "./Game/Grid.svelte";
+	import api from "./api.js";
 
-	let size = { width: 16, height: 16 };
+	let game = api.new_game(16, 16);
+
+	let dummy = [
+		[1, 1],
+		[-1, 1]
+	];
 </script>
 
 <style>
@@ -29,5 +34,13 @@
 
 <main>
 	<h1>Minesweeper</h1>
-	<Grid {...size} />
+	{#await game}
+		<p>Downloading the game...</p>
+	{:then current_game}
+		<Grid game={current_game} />
+	{:catch error}
+		<p>Error : Unable to get the game :/</p>
+		<p>Dummy example :</p>
+		<Grid game={dummy} />
+	{/await}
 </main>

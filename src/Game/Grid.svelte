@@ -1,16 +1,15 @@
 <script>
     import Case from "./Case.svelte";
 
-    export let width = 16;
-    export let height = 16;
+    export let game;
 </script>
 
 <div class="container">
-    {#each Array(height) as _, i}
+    {#each game as row}
         <div class="row">
-            {#each Array(width) as _, j}
+            {#each row as col}
                 <div class="col p-0">
-                    <Case/>
+                    <Case value={col}/>
                 </div>
             {/each}
         </div>

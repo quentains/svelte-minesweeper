@@ -9,6 +9,7 @@
     let image = 'img/case.png';
 
     function handleClick(event) {
+        
         // Show the case
         if (event.button == 0)
             clicked = true;    
