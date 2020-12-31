@@ -3,11 +3,6 @@
 	import api from "./api.js";
 
 	let game = api.new_game(16, 16);
-
-	let dummy = [
-		[1, 1],
-		[-1, 1]
-	];
 </script>
 
 <style>
@@ -40,7 +35,5 @@
 		<Grid game={current_game} />
 	{:catch error}
 		<p>Error : Unable to get the game :/</p>
-		<p>Dummy example :</p>
-		<Grid game={dummy} />
 	{/await}
 </main>
