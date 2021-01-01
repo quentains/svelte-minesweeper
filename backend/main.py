@@ -2,12 +2,19 @@ from random import randint
 
 from typing import List
 from fastapi import FastAPI
-from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-class Game(BaseModel):
-    board: List[List[int]] = []
+def create_game(width, height) :
+    nb_cases = width * height
+    nb_bombs = nb_cases // 10
+    
+    bombs = set()
+    while len(bombs) < nb_bombs :
+        bombs.add(randint(0, nb_cases - 1))
+
+    # TODO
+    pass
 
 app = FastAPI()
 
@@ -22,13 +29,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/new_game/", response_model=Game)
+@app.get("/new_game/")
 async def image(width: int = 16, height: int = 16):
-    game = {'board' : []}
-    
+    game = []
     for _ in range(height) :
-        game['board'].append([])
+        game.append([])
         for _ in range(width) :
-            game['board'][-1].append(randint(-1,3))
-
+            game[-1].append(randint(-1,3))
     return game

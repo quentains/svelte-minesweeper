@@ -2,8 +2,6 @@
     import Case from "./Case.svelte";
 
     export let game;
-
-    console.log(game);
 </script>
 
 <div class="container">
