@@ -1,10 +1,13 @@
 <script>
-    
-    // Value of the case ([1-6]), -1 if bomb !
-    export let value = 0;
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
 
-    let flagged = false;
-    let clicked = false;
+    // Value of the case ([1-6]), -1 if bomb !
+    export let x;
+    export let y;
+    export let value = 0;
+    export let flagged = false;
+    export let clicked = false;
     
     let image = 'img/case.png';
 
@@ -13,14 +16,16 @@
         // Show the case
         if (event.button == 0){
             if (!flagged)
-                clicked = true;    
+                clicked = true;
         }
-        
+
         // Toggle the flag
         else if (event.button == 2) {
             if (!clicked)
-                flagged = !flagged; 
+                flagged = !flagged;
         }
+
+        dispatch('update', {x:x, y:y, flagged:flagged, clicked:clicked});
     }
 
     // Update the image path based on the current state
@@ -31,8 +36,11 @@
             // If bomb
             if (value == -1)
                 image = 'img/bomb.png';
-            else
+            else {
                 image = "img/" + value + ".png";
+                if (value == 0)
+                    dispatch('empty', {x:x, y:y});
+            }
         }
         else
             image = 'img/case.png';

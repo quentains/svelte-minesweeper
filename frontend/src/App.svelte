@@ -2,7 +2,7 @@
 	import Grid from "./Game/Grid.svelte";
 	import api from "./api.js";
 
-	let game = api.new_game(16, 16);
+	let game = api.new_game(3, 3);
 </script>
 
 <style>
