@@ -19,7 +19,7 @@ def create_game(width, height) :
     game = [[0 for _ in range(width)] for _ in range(height)]
 
     bombs = set()
-    nb_bombs = ceil((width * height) / 10.0)
+    nb_bombs = ceil((width * height) / 6.0)
     # Generate random bombs
     while len(bombs) < nb_bombs :
         x = randint(0, width - 1)

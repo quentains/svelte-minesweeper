@@ -8,6 +8,8 @@
     export let value = 0;
     export let flagged = false;
     export let clicked = false;
+
+    let isBomb = value == -1 ? true : false;
     
     let image = 'img/case.png';
 
@@ -25,7 +27,13 @@
                 flagged = !flagged;
         }
 
-        dispatch('update', {x:x, y:y, flagged:flagged, clicked:clicked});
+        dispatch('update', {
+            x:x,
+            y:y,
+            flagged:flagged,
+            clicked:clicked,
+            isBomb: isBomb
+        });
     }
 
     // Update the image path based on the current state
@@ -34,7 +42,7 @@
             image = 'img/flag.png';
         else if (clicked) {
             // If bomb
-            if (value == -1)
+            if (isBomb)
                 image = 'img/bomb.png';
             else {
                 image = "img/" + value + ".png";
@@ -60,6 +68,6 @@
     }
 </style>
 
-<span class="case" on:click={handleClick} on:contextmenu={handleClick} oncontextmenu="return false;">
+<span class="case" on:click={handleClick} on:contextmenu={handleClick} oncontextmenu="return false;" ondragstart="return false;">
     <img src={image} alt="case" />
 </span>

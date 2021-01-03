@@ -2,7 +2,15 @@
 	import Grid from "./Game/Grid.svelte";
 	import api from "./api.js";
 
-	let game = api.new_game(3, 3);
+	let width = 30;
+	let height = 16;
+	let game = api.new_game(width, height);
+
+	$ : {
+		width,
+		height,
+		game = api.new_game(width, height);
+	}
 </script>
 
 <style>
@@ -25,10 +33,17 @@
 			max-width: none;
 		}
 	}
+
+	input {
+		width : 75px;
+	}
 </style>
 
 <main>
 	<h1>Minesweeper</h1>
+	<input type=number bind:value={width} min=3 max=30>
+	<input type=number bind:value={height} min=3 max=30>
+	<hr>
 	{#await game}
 		<p>Downloading the game...</p>
 	{:then current_game}
