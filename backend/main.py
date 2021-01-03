@@ -6,16 +6,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-def count_bombs(x, y, width, height, game) :
-    bombs = 0
+def count_bombs(x, y, bombs) :
+    n = 0
     for i in range(x-1, x+2) :
         for j in range(y-1, y+2) :
-            if (i, j) != (x, y) :
-                if 0 <= i < width and 0 <= j < height :
-                    if game[j][i] == -1 :
-                        bombs += 1
-                        
-    return bombs
+            if (i,j) in bombs :
+                n += 1          
+    return n
                 
 
 def create_game(width, height) :
@@ -29,13 +26,15 @@ def create_game(width, height) :
         y = randint(0, height - 1)
         bombs.add((x,y))
 
+    # Add the bomb
     for bomb in bombs :
         game[bomb[1]][bomb[0]] = -1
-        
+    
+    # Compute the other cases
     for x in range(width) :
         for y in range(height) :
             if (x,y) not in bombs :
-                game[y][x] = count_bombs(x, y, width, height, game)
+                game[y][x] = count_bombs(x, y, bombs)
 
     return game
 
@@ -54,5 +53,4 @@ app.add_middleware(
 
 @app.get("/new_game/")
 async def image(width: int = 16, height: int = 16):
-    game = create_game(width, height)
-    return game
+    return create_game(width, height)

@@ -11,9 +11,11 @@
     function handleClick(event) {
         
         // Show the case
-        if (event.button == 0)
-            clicked = true;    
-
+        if (event.button == 0){
+            if (!flagged)
+                clicked = true;    
+        }
+        
         // Toggle the flag
         else if (event.button == 2) {
             if (!clicked)
