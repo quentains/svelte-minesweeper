@@ -1,7 +1,12 @@
 <script>
+	import { onMount } from 'svelte';
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
+
     import Case from "./Case.svelte";
 
     export let game;
+    export let time;
 
     var bomb_song = new Audio('sound/explosion.mp3');
     var win_song = new Audio('sound/celebration.mp3');
@@ -13,11 +18,22 @@
     let nb_flags = 0;
     let nb_clicked = 0;
     let nb_bombs = game.flat(2).reduce((total,x) => (x==-1 ? total+1 : total), 0)
-    
+
+    let started = false;
+    let finished = false;
+
     // Populate the needed structure
     // (useless to get it from the backend)
     game = game.map((e,j) => e.map((x, i) => {return {"x": i, "y": j, "value": x, "flagged": false, "clicked": false}}));
 
+    const interval = setInterval(update_time, 1000);
+
+    function update_time() {
+        if (started) {
+            time++;
+        }
+    }
+    
     // Update the game structure
     function handleUpdate(event) {
         let x = event.detail.x;
@@ -43,8 +59,12 @@
         // If clicked on a bomb -> Loose
         if (event.detail.isBomb && clicked) {
             bomb_song.play();
+            // Show all the disarmed bombs
+            // the rest of the bombs
             bombs_animation();
+            finished = true;
         }
+        started = true;
     }
     
     // If case is empty, reveal the adjacent cases
@@ -92,7 +112,9 @@
 
     function bomb_reveal(bombs) {
         // Recursive function, reveal all bombs in 1 sec.
-
+        if (bombs.length == 0){
+            return;
+        }
         let coord = bombs.shift();
         let x = coord.x;
         let y = coord.y;
@@ -118,6 +140,11 @@
             win_song.play();
             // Show all the disarmed bombs
             bombs_animation();
+            finished = true;
+        }
+
+        if (finished) {
+            clearInterval(interval);
         }
     }
 </script>
