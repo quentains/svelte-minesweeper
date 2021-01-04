@@ -1,4 +1,6 @@
 <script>
+import { select_option } from "svelte/internal";
+
     import Case from "./Case.svelte";
 
     export let game;
@@ -17,7 +19,7 @@
     // Populate the needed structure
     // (useless to get it from the backend)
     game = game.map((e,j) => e.map((x, i) => {return {"x": i, "y": j, "value": x, "flagged": false, "clicked": false}}));
-   
+
     // Update the game structure
     function handleUpdate(event) {
         let x = event.detail.x;
@@ -41,8 +43,19 @@
         game[y][x].flagged = flagged;
 
         // If clicked on a bomb -> Loose
-        if (event.detail.isBomb && clicked)
+        if (event.detail.isBomb && clicked) {
             bomb_song.play();
+            let bombs = [];
+            for (let j=0 ; j < height ; j++) {
+                for (let i=0 ; i < width ; i++) {
+                    if (game[j][i].value == -1) {
+                        bombs.push({'x': i, 'y': j});
+                    }
+                }
+            }
+            shuffleArray(bombs);
+            bomb_reveal(bombs);
+        }
     }
     
     // If case is empty, reveal the adjacent cases
@@ -60,6 +73,32 @@
                 }
             }
         }
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function bomb_reveal(bombs) {
+        let coord = bombs.shift();
+        let x = coord.x;
+        let y = coord.y;
+
+        // If already detected -> disarmed
+        if (game[y][x].flagged) {
+            game[y][x].value = -2;
+        }
+        // Else -> explosion
+        else {
+            game[y][x].value = -3;
+        }
+
+        // Little time before revealing the next one
+        setTimeout(bomb_reveal, 1000/nb_bombs, bombs);
+
     }
     
     // Check if the game is finished

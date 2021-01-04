@@ -10,6 +10,8 @@
     export let clicked = false;
 
     let isBomb = value == -1 ? true : false;
+    let isDisarmed = value == -2 ? true : false;
+    let isExplode = value == -3 ? true : false;
     
     let image = 'img/case.png';
 
@@ -38,20 +40,31 @@
 
     // Update the image path based on the current state
     $: {
-        if (flagged)
-            image = 'img/flag.png';
-        else if (clicked) {
-            // If bomb
-            if (isBomb)
-                image = 'img/bomb.png';
-            else {
-                image = "img/" + value + ".png";
-                if (value == 0)
-                    dispatch('empty', {x:x, y:y});
-            }
+        isDisarmed = value == -2 ? true : false;
+        isExplode = value == -3 ? true : false;
+
+        if (isDisarmed){
+            image = '/img/bomb_blue.png';
         }
-        else
-            image = 'img/case.png';
+        else if (isExplode) {
+            image = '/img/bomb_red.png';
+        }
+        else {
+            if (flagged)
+                image = 'img/flag.png';
+            else if (clicked) {
+                // If bomb
+                if (isBomb)
+                    image = 'img/bomb.png';
+                else {
+                    image = "img/" + value + ".png";
+                    if (value == 0)
+                        dispatch('empty', {x:x, y:y});
+                }
+            }
+            else
+                image = 'img/case.png';
+        }
     }
 
 </script>
