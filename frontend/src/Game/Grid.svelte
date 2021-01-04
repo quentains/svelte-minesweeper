@@ -1,6 +1,4 @@
 <script>
-import { select_option } from "svelte/internal";
-
     import Case from "./Case.svelte";
 
     export let game;
@@ -45,16 +43,7 @@ import { select_option } from "svelte/internal";
         // If clicked on a bomb -> Loose
         if (event.detail.isBomb && clicked) {
             bomb_song.play();
-            let bombs = [];
-            for (let j=0 ; j < height ; j++) {
-                for (let i=0 ; i < width ; i++) {
-                    if (game[j][i].value == -1) {
-                        bombs.push({'x': i, 'y': j});
-                    }
-                }
-            }
-            shuffleArray(bombs);
-            bomb_reveal(bombs);
+            bombs_animation();
         }
     }
     
@@ -75,6 +64,25 @@ import { select_option } from "svelte/internal";
         }
     }
 
+    function bombs_animation() {
+        // This function reveal all bombs
+        // by calling bomb_reveal()
+
+        let bombs = [];
+            for (let j=0 ; j < height ; j++) {
+                for (let i=0 ; i < width ; i++) {
+                    if (game[j][i].value == -1) {
+                        bombs.push({'x': i, 'y': j});
+                    }
+                }
+            }
+
+            // Shuffle the array in order to reveal
+            // the bombs in a random order
+            shuffleArray(bombs);
+            bomb_reveal(bombs);
+    }
+
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -83,6 +91,8 @@ import { select_option } from "svelte/internal";
     }
 
     function bomb_reveal(bombs) {
+        // Recursive function, reveal all bombs in 1 sec.
+
         let coord = bombs.shift();
         let x = coord.x;
         let y = coord.y;
@@ -106,6 +116,8 @@ import { select_option } from "svelte/internal";
         // If there are as many flags as bombs AND the all the other cases are clicked
         if ( (nb_flags == nb_bombs) && (nb_flags + nb_clicked == width * height) ) {
             win_song.play();
+            // Show all the disarmed bombs
+            bombs_animation();
         }
     }
 </script>
