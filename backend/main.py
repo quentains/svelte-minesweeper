@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, choice
 from math import ceil
 
 from typing import List
@@ -17,7 +17,7 @@ def count_bombs(x, y, bombs) :
 
 def create_game(width, height) :
     game = [[0 for _ in range(width)] for _ in range(height)]
-
+    
     bombs = set()
     nb_bombs = ceil((width * height) / 6.0)
     # Generate random bombs
@@ -30,13 +30,16 @@ def create_game(width, height) :
     for bomb in bombs :
         game[bomb[1]][bomb[0]] = -1
     
+    empty = []
     # Compute the other cases
     for x in range(width) :
         for y in range(height) :
             if (x,y) not in bombs :
                 game[y][x] = count_bombs(x, y, bombs)
+                if game[y][x] == 0 :
+                    empty.append((x, y))
 
-    return game
+    return game, choice(empty)
 
 app = FastAPI()
 
@@ -53,4 +56,5 @@ app.add_middleware(
 
 @app.get("/new_game/")
 async def image(width: int = 16, height: int = 16):
-    return create_game(width, height)
+    game, starting_point = create_game(width, height)
+    return {'board': game, 'starting_point': {'x': starting_point[0], 'y': starting_point[1]}}

@@ -44,22 +44,24 @@
         isExplode = value == -3 ? true : false;
 
         if (isDisarmed){
-            image = '/img/bomb_blue.png';
+            image = '/img/bomb_sad.svg';
         }
         else if (isExplode) {
-            image = '/img/bomb_red.png';
+            image = '/img/bomb_happy.svg';
         }
         else {
             if (flagged)
-                image = 'img/flag.png';
+                image = 'img/flag.svg';
             else if (clicked) {
                 // If bomb
                 if (isBomb)
-                    image = 'img/bomb.png';
+                    image = 'img/bomb_happy.svg';
                 else {
                     image = "img/" + value + ".png";
-                    if (value == 0)
+                    if (value == 0){
                         dispatch('empty', {x:x, y:y});
+                        console.log('empty');
+                    }
                 }
             }
             else

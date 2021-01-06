@@ -8,6 +8,9 @@
     export let game;
     export let time;
 
+    let starting_point = game.starting_point;
+    game = game.board;
+
     var bomb_song = new Audio('sound/explosion.mp3');
     var win_song = new Audio('sound/celebration.mp3');
 
@@ -16,7 +19,7 @@
 
     // Variables to detect the end of the game
     let nb_flags = 0;
-    let nb_clicked = 0;
+    let nb_clicked = 1;
     let nb_bombs = game.flat(2).reduce((total,x) => (x==-1 ? total+1 : total), 0)
 
     let started = false;
@@ -25,6 +28,9 @@
     // Populate the needed structure
     // (useless to get it from the backend)
     game = game.map((e,j) => e.map((x, i) => {return {"x": i, "y": j, "value": x, "flagged": false, "clicked": false}}));
+    
+    // Reveal the starting point
+    game[starting_point.y][starting_point.x].clicked = true;
 
     const interval = setInterval(update_time, 1000);
 

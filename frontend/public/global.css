@@ -1,3 +1,8 @@
+@font-face {
+	font-family: "Audio Wide";
+	src: url(Audiowide-Regular.ttf);
+}
+
 html, body {
 	position: relative;
 	width: 100%;

@@ -22,7 +22,7 @@
 		padding: 1em;
 		max-width: 240px;
 		margin: 0 auto;
-		font-family: "Comic Sans MS", "Comic Sans", cursive;
+		font-family: "Audio Wide", sans-serif;
 		min-height: 100%;
 	}
 
