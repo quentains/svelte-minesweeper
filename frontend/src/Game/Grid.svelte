@@ -160,6 +160,11 @@
     }
 </script>
 
+<style>
+    .container {
+    }
+</style>
+
 <!-- https://i.redd.it/5u83w0fyzzf31.jpg -->
 <div class="container">
     {#each game as row}
