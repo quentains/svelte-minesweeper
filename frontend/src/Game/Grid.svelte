@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
@@ -32,8 +32,13 @@
     // Reveal the starting point
     game[starting_point.y][starting_point.x].clicked = true;
 
+    // Create the timing and stop it on destroy
     const interval = setInterval(update_time, 1000);
+    onDestroy(async () => {
+        clearInterval(interval);
+    });
 
+    // Increase the timer once a click is done
     function update_time() {
         if (started) {
             time++;

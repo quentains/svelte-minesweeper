@@ -60,7 +60,6 @@
                     image = "img/" + value + ".png";
                     if (value == 0){
                         dispatch('empty', {x:x, y:y});
-                        console.log('empty');
                     }
                 }
             }

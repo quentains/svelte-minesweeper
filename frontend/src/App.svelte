@@ -13,6 +13,12 @@
 		game = api.new_game(width, height);
 		time = 0;
 	}
+
+	function restart() {
+		game = api.new_game(width, height);
+		time = 0;
+	}
+
 </script>
 
 <style>
@@ -20,21 +26,32 @@
 		background-color: #222;
 		text-align: center;
 		padding: 1em;
-		max-width: 240px;
+		max-width: 100%;
 		margin: 0 auto;
 		font-family: "Audio Wide", sans-serif;
-		min-height: 100%;
 	}
 
 	h1 {
-		color: #1ce;
+		color: #E5D9F2;
 		text-transform: uppercase;
 		font-size: 4em;
-		font-weight: 100;
+		display: inline-block;
+		margin-right: 5px;
+	}
+
+	#banner {
+		margin-top: 10px;
+	}
+
+	#banner img {
+		width: 75px;
+		display: inline-block;
+		position: relative;
+		top: -25px;
 	}
 
 	p {
-		color: #1ce;
+		color: #E5D9F2;
 		font-weight: bold;
 		font-size: 30px;
 	}
@@ -45,20 +62,23 @@
 		}
 	}
 
-	input {
-		background-color: #222;
-		color: white;
-		width : 75px;
-		border-radius: 10px;
+	#restart {
+		width: 50px;
+		position: relative;
+		top: -4px;
+		left: 10px;
 	}
 </style>
 
 <main>
-	<h1>Minesweeper</h1>
-	<input type=number bind:value={width} min=3 max=30>
-	<input type=number bind:value={height} min=3 max=30>
-	<hr>
-	<p>TIME : {time}</p>
+	<div class="container" id="banner">
+		<h1>Minesweeper</h1>
+		<img alt="Bomb icon" src="img/bomb_white.png"/>
+	</div>
+	<p>
+		TIME : {time}
+		<img on:click={restart} id="restart" alt="restart" src="img/restart.svg" />
+	</p>
 	{#await game}
 		<p>Downloading the game...</p>
 	{:then current_game}
