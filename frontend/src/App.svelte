@@ -29,6 +29,7 @@
 		max-width: 100%;
 		margin: 0 auto;
 		font-family: "Audio Wide", sans-serif;
+		min-height: 100%;
 	}
 
 	h1 {
