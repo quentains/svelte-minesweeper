@@ -68,7 +68,7 @@
         game[y][x].flagged = flagged;
 
         // If clicked on a bomb -> Loose
-        if (event.detail.isBomb && clicked) {
+        if (event.detail.isBomb && clicked && !finished) {
             bomb_song.play();
             // Show all the disarmed bombs
             // the rest of the bombs
@@ -161,8 +161,24 @@
 </script>
 
 <style>
-    .container {
+	.container {
+		display: flex;
+        justify-content: center;
+		flex-direction: column;
+        height: 100%;
+        min-height: 100%;
+	}
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
+
+    .case {
+        width: 100%;
+    }
+
 </style>
 
 <!-- https://i.redd.it/5u83w0fyzzf31.jpg -->
@@ -170,8 +186,8 @@
     {#each game as row}
         <div class="row">
             {#each row as data}
-                <div class="col p-0">
-                    <Case {...data} on:empty={handleEmpty} on:update={handleUpdate}/>
+                <div class="case">
+                    <Case {...data} finished={finished} on:empty={handleEmpty} on:update={handleUpdate}/>
                 </div>
             {/each}
         </div>

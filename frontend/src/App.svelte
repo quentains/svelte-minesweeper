@@ -26,7 +26,6 @@
 		background-color: #222;
 		text-align: center;
 		padding: 1em;
-		max-width: 100%;
 		margin: 0 auto;
 		font-family: "Audio Wide", sans-serif;
 		min-height: 100%;
@@ -42,33 +41,32 @@
 
 	#banner {
 		margin-top: 10px;
+		height: 110px;
 	}
 
 	#banner img {
 		width: 75px;
 		display: inline-block;
 		position: relative;
-		top: -25px;
+		top: 6px;
 	}
 
 	p {
 		color: #E5D9F2;
 		font-weight: bold;
 		font-size: 30px;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+		margin-top: 10px;
+		margin-bottom: 30px;
 	}
 
 	#restart {
 		width: 50px;
 		position: relative;
-		top: -4px;
+		top: 12px;
 		left: 10px;
 	}
+
+
 </style>
 
 <main>

@@ -9,6 +9,8 @@
     export let flagged = false;
     export let clicked = false;
 
+    export let finished = false;
+
     let isBomb = value == -1 ? true : false;
     let isDisarmed = value == -2 ? true : false;
     let isExplode = value == -3 ? true : false;
@@ -16,7 +18,10 @@
     let image = 'img/case.png';
 
     function handleClick(event) {
-        
+        // If game is finished, do nothing
+        if (finished)
+            return;
+
         // Show the case
         if (event.button == 0){
             if (!flagged)
@@ -71,17 +76,11 @@
 </script>
 
 <style>
-    .case {
-        width: 100%;
-        height: 100%;
-        display: inline-block;
-    }
-
     img {
         width: 100%;
     }
 </style>
 
-<span class="case" on:click={handleClick} on:contextmenu={handleClick} oncontextmenu="return false;" ondragstart="return false;">
-    <img src={image} alt="case" />
-</span>
+
+<img src={image} alt="case" class="case" on:click={handleClick} on:contextmenu={handleClick} oncontextmenu="return false;" ondragstart="return false;"/>
+
