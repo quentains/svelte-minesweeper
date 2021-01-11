@@ -87,9 +87,10 @@
             for (let i = x-1 ; i <= x+1 ; i++) {
                 if ((i >= 0) && (j >= 0) && (i<width) && (j<height)) {
                     // If not already counted (nb_clicked)
-                    if (!game[j][i].clicked)
+                    if (!game[j][i].clicked && !game[j][i].flagged) {
                         nb_clicked++;
-                    game[j][i].clicked = true;
+                        game[j][i].clicked = true;
+                    }
                 }
             }
         }
@@ -162,7 +163,9 @@
 
 <style>
 	.container {
+        width: 80%;
 		display: flex;
+        margin: auto;
         justify-content: center;
 		flex-direction: column;
         height: 100%;

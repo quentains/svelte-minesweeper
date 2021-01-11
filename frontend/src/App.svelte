@@ -1,13 +1,29 @@
 <script>
 	import Grid from "./Game/Grid.svelte";
+	import Selector from "./Components/Selector.svelte";
 	import api from "./api.js";
 
 	let width = 30;
 	let height = 16;
+	let difficulty = 1;
 	let game = api.new_game(width, height);
 	let time = 0;
 
 	$ : {
+
+		if (difficulty == 0) {
+			width = 20;
+			height = 8;
+		}
+		else if (difficulty == 1) {
+			width = 30;
+			height = 16;
+		}
+		else {
+			width = 50;
+			height = 25;
+		}
+
 		width,
 		height,
 		game = api.new_game(width, height);
@@ -41,7 +57,7 @@
 
 	#banner {
 		margin-top: 10px;
-		height: 110px;
+		height: 142px;
 	}
 
 	#banner img {
@@ -74,6 +90,7 @@
 		<h1>Minesweeper</h1>
 		<img alt="Bomb icon" src="img/bomb_white.png"/>
 	</div>
+	<Selector bind:selected={difficulty}/>
 	<p>
 		TIME : {time}
 		<img on:click={restart} id="restart" alt="restart" src="img/restart.svg" />
