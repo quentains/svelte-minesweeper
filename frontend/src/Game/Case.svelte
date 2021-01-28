@@ -75,9 +75,11 @@
 
 </script>
 
+<!-- TODO: margin-top -6px ? WTF -->
 <style>
     img {
         width: 100%;
+        margin-bottom: -6px;
     }
 </style>
 
